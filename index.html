@@ -1,0 +1,555 @@
+HTMl
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>دعوة زفاف — بدر أماني & معمر ناصيف</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600&family=Scheherazade+New:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Amiri',serif}
+body{background:#fffafa;display:flex;align-items:center;justify-content:center}
+
+#stage{
+  width:100vw;height:100dvh;
+  background: radial-gradient(ellipse at 50% 25%, #ffffff 0%, #fffafa 38%, #fdf1f4 72%, #f7e3e9 100%);
+  position:relative;
+  overflow:hidden;
+}
+#stage::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(231,170,190,0.13) 0%, transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(231,170,190,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(231,170,190,0.07) 0%, transparent 60%),
+    repeating-linear-gradient(45deg, rgba(214,165,184,0.035) 0px, rgba(214,165,184,0.035) 2px, transparent 2px, transparent 8px);
+  pointer-events:none;
+  z-index:1;
+}
+/* زخارف إسلامية */
+.ornament{
+  position:absolute;
+  z-index:1;
+  opacity:0.08;
+  font-size:80px;
+  color:#c98da3;
+  pointer-events:none;
+}
+.orn1{top:5%;left:5%;transform:rotate(-15deg)}
+.orn2{bottom:5%;right:5%;transform:rotate(15deg)}
+.orn3{top:50%;left:50%;transform:translate(-50%,-50%) scale(3);opacity:0.04}
+
+.scene{
+  position:relative;
+  width:min(440px,96vw);
+  height:min(840px,97dvh);
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+}
+
+/* الظرف */
+.envelope{
+  position:absolute;inset:6% 2% 5%;z-index:10;
+  border-radius:24px;
+  background:linear-gradient(145deg,#fffefe,#f8e8ed);
+  box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(255,255,255,0.4);
+  transition:1s cubic-bezier(0.2,0.8,0.2,1);
+}
+.envelope .paper{
+  position:absolute;inset:0;border-radius:24px;overflow:hidden;
+}
+.paper::before,.paper::after{
+  content:"";position:absolute;bottom:-1px;width:52%;height:65%;
+  background:linear-gradient(145deg,#f8e9ee,#efd7df);z-index:1;
+}
+.paper::before{left:0;clip-path:polygon(0 100%,100% 0,100% 100%)}
+.paper::after{right:0;clip-path:polygon(0 0,100% 100%,0 100%)}
+.flap{
+  position:absolute;left:0;right:0;top:0;height:57%;z-index:5;
+  background:linear-gradient(150deg,#ffffff,#f5e3e9);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;
+  transition:1.05s cubic-bezier(0.2,0.8,0.2,1);
+  filter:drop-shadow(0 9px 8px rgba(0,0,0,0.1));
+}
+.inner-glow{
+  position:absolute;inset:16% 12%;
+  background:radial-gradient(circle,rgba(255,247,217,0.4),transparent 60%);
+  z-index:2;
+}
+.seal{
+  position:absolute;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:120px;height:120px;border-radius:50%;cursor:pointer;
+  background:radial-gradient(circle at 35% 30%,#e8c47d,#a66e2e 65%,#694419);
+  border:4px double #f7d996;
+  box-shadow:0 12px 35px rgba(0,0,0,0.6),0 0 30px rgba(224,175,93,0.3);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff2d2;font-size:32px;font-weight:700;font-family:'Amiri',serif;
+  transition:0.55s;
+}
+.seal::after{
+  content:"";position:absolute;inset:9px;
+  border:1px solid rgba(247,217,150,0.6);border-radius:50%;
+}
+.seal span{position:relative;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
+.tap{
+  position:absolute;z-index:25;bottom:3%;left:0;right:0;
+  text-align:center;color:#f5dfba;font-size:14px;letter-spacing:0.5px;
+  font-family:'Cairo',sans-serif;
+}
+
+/* الدعوة الداخلية */
+.invite{
+  position:absolute;z-index:3;inset:0.5% 0 0.5%;border-radius:28px;
+  overflow:auto;
+  opacity:0;transform:scale(0.93) translateY(25px);
+  transition:1.2s cubic-bezier(0.2,0.8,0.2,1);
+  background: linear-gradient(175deg, #fcf6ec 0%, #f5ead9 40%, #ede0ca 80%, #e4d3b9 100%);
+  box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  padding:26px 20px 30px;
+  color:#3a281b;
+}
+.invite::-webkit-scrollbar{width:0}
+.open .invite{opacity:1;transform:scale(1) translateY(0);z-index:40}
+.open .flap{transform:rotateX(180deg);z-index:2}
+.open .seal{opacity:0;transform:translate(-50%,-50%) scale(1.8);pointer-events:none}
+.open .envelope{opacity:0;transform:scale(0.9) translateY(30px);pointer-events:none}
+.open .tap{opacity:0}
+
+/* إطار الدعوة */
+.frame{
+  min-height:100%;
+  border:2px solid rgba(173,124,62,0.5);
+  border-radius:22px;
+  padding:28px 20px 24px;
+  position:relative;
+  background:rgba(255,252,245,0.3);
+}
+.frame::before{
+  content:"";position:absolute;inset:10px;
+  border:1px solid rgba(183,139,82,0.35);
+  border-radius:16px;
+  pointer-events:none;
+}
+.corner{
+  position:absolute;color:#b17d3e;font-size:26px;
+  font-family:'Amiri',serif;
+}
+.c1{top:14px;right:18px}.c2{top:14px;left:18px}
+.c3{bottom:14px;right:18px}.c4{bottom:14px;left:18px}
+
+/* النصوص - بنفس نمط الصورة */
+.bismillah{
+  font:700 20px 'Amiri',serif;
+  color:#8f6273;
+  text-align:center;
+  line-height:1.8;
+  margin-bottom:10px;
+}
+.quran-verse{
+  font:400 18px 'Amiri',serif;
+  color:#765465;
+  text-align:center;
+  line-height:2;
+  margin:4px auto 10px;
+  max-width:95%;
+}
+.heading{
+  font-size:15px;
+  letter-spacing:4px;
+  color:#a6763d;
+  font-family:'Cairo',sans-serif;
+  font-weight:300;
+  text-align:center;
+  margin-bottom:6px;
+}
+.title-main{
+  font:700 32px 'Amiri',serif;
+  color:#7a532a;
+  text-align:center;
+  line-height:1.4;
+  margin:4px 0 2px;
+}
+.family-line{
+  font:400 22px 'Amiri',serif;
+  color:#8b6239;
+  text-align:center;
+  line-height:1.6;
+  margin:2px 0;
+}
+.family-line strong{
+  font-weight:700;
+  color:#9a682e;
+}
+.divider{
+  width:60%;height:1px;
+  background:linear-gradient(90deg,transparent,#b88849,transparent);
+  margin:12px auto;
+}
+.dua-line{
+  font:400 18px 'Amiri',serif;
+  color:#7a532a;
+  text-align:center;
+  line-height:1.8;
+  margin:8px 0 4px;
+}
+.invite-text{
+  font:400 20px 'Amiri',serif;
+  color:#5a3f24;
+  text-align:center;
+  line-height:1.9;
+  margin:6px 0;
+}
+.invite-text strong{
+  font-weight:700;
+  color:#9a682e;
+}
+
+/* باقي العناصر (العداد، المعلومات، النموذج) */
+.count-title{
+  font:700 20px 'Amiri',serif;
+  color:#79542d;
+  text-align:center;
+  margin:18px 0 10px;
+}
+.count{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:0 4px 14px;
+}
+.unit{
+  background:rgba(255,248,234,0.7);
+  border:1px solid rgba(189,148,94,0.3);
+  border-radius:14px;
+  padding:8px 2px;
+  text-align:center;
+}
+.num{
+  font-size:26px;font-weight:700;color:#9c6a30;font-family:'Cairo',sans-serif;
+}
+.lab{
+  font-size:10px;color:#85633d;font-family:'Cairo',sans-serif;
+}
+.info{
+  display:grid;gap:10px;margin-top:10px;
+}
+.info-card{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,248,234,0.6);
+  border:1px solid rgba(182,138,80,0.3);
+  border-radius:14px;
+  padding:10px 14px;
+  text-align:right;
+}
+.icon{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#b17b3d;color:#fff;
+  font-size:18px;flex:none;
+}
+.info-card b{display:block;color:#684723;font-size:14px;font-family:'Cairo',sans-serif}
+.info-card span{font-size:13px;color:#7b6245;font-family:'Cairo',sans-serif}
+.map{
+  display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;color:#fff;background:#9f6e34;
+  border-radius:22px;padding:6px 20px;font-size:13px;
+  font-family:'Cairo',sans-serif;margin-top:5px;
+}
+.audio-player{
+  background:rgba(255,248,234,0.7);
+  border:1px solid rgba(182,138,80,0.3);
+  border-radius:14px;
+  padding:12px;
+  margin-top:14px;
+  text-align:center;
+}
+.audio-title{
+  font:700 18px 'Amiri',serif;
+  color:#76502a;
+  margin-bottom:6px;
+}
+.audio-player audio{
+  width:100%;height:42px;
+  border-radius:10px;
+  margin-bottom:6px;
+}
+.play-btn{
+  background:#b17b3d;color:#fff;
+  border:none;border-radius:25px;
+  padding:6px 28px;font-size:14px;
+  cursor:pointer;transition:0.3s;
+  font-family:'Cairo',sans-serif;
+}
+.play-btn:hover{background:#9a682e}
+.rsvp-section{
+  background:rgba(255,248,234,0.7);
+  border:1px solid rgba(182,138,80,0.3);
+  border-radius:14px;
+  padding:14px;
+  margin-top:12px;
+}
+.rsvp-title{
+  font:700 20px 'Amiri',serif;
+  color:#76502a;
+  text-align:center;
+  margin-bottom:8px;
+}
+.rsvp-section form{
+  display:flex;flex-direction:column;gap:8px;
+}
+.rsvp-section input{
+  padding:9px 12px;
+  border:1px solid rgba(182,138,80,0.4);
+  border-radius:10px;
+  background:#fffcf3;
+  font-size:14px;font-family:'Cairo',sans-serif;
+  outline:none;
+}
+.rsvp-section input:focus{border-color:#b17b3d}
+.rsvp-section button{
+  background:#b17b3d;color:#fff;
+  border:none;border-radius:25px;
+  padding:9px;font-size:15px;
+  cursor:pointer;transition:0.3s;
+  font-family:'Cairo',sans-serif;
+}
+.rsvp-section button:hover{background:#9a682e}
+.footer{
+  font:18px/1.9 'Amiri',serif;
+  color:#79562f;
+  text-align:center;
+  margin-top:16px;
+}
+
+/* جزيئات متلألئة */
+.spark{
+  position:absolute;z-index:30;
+  width:4px;height:4px;border-radius:50%;
+  background:#f7d28b;
+  box-shadow:0 0 12px #f7d28b;
+  animation:float 5s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(30px);opacity:0}
+  25%{opacity:1}
+  to{transform:translateY(-80vh);opacity:0}
+}
+
+/* استجابة للشاشات الصغيرة */
+@media(max-height:700px){
+  .scene{height:97dvh}
+  .invite{padding:16px}
+  .frame{padding:18px 14px}
+  .title-main{font-size:26px}
+  .family-line{font-size:18px}
+  .invite-text{font-size:17px}
+  .dua-line{font-size:16px}.bismillah{font-size:18px}.quran-verse{font-size:15px;line-height:1.9}
+  .count-title{font-size:17px;margin:10px 0 6px}
+  .info-card{padding:7px 10px}
+  .audio-player,.rsvp-section{margin-top:8px}
+  .seal{width:100px;height:100px;font-size:26px}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- زخارف -->
+  <div class="ornament orn1">ﷺ</div>
+  <div class="ornament orn2">ﷺ</div>
+  <div class="ornament orn3">ﷲ</div>
+
+  <div class="scene" id="scene">
+    <!-- الظرف -->
+    <div class="envelope">
+      <div class="paper"></div>
+      <div class="inner-glow"></div>
+      <div class="flap"></div>
+      <div class="seal" onclick="openInvitation()"><span>W&amp;S</span></div>
+    </div>
+    <div class="tap">اضغط على الختم لفتح دعوتنا ✨</div>
+
+    <!-- الدعوة الداخلية -->
+    <main class="invite">
+      <div class="frame">
+        <span class="corner c1">s</span><span class="corner c2">w</span>
+        <span class="corner c3">w</span><span class="corner c4">s</span>
+
+        <!-- النص كما في الصورة مع تغيير الأسماء -->
+        <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+        <div class="quran-verse">
+          ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا
+          وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً إِنَّ فِي ذَلِكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ﴾
+        </div>
+
+        <div class="family-line">
+         عائلة السيد<strong>بدر أماني</strong>
+        </div>
+        <div class="family-line" style="font-size:18px; color:#8b6239;">
+          (والد العريس)
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="family-line">
+          عائلة السيد <strong>معمر ناصيف</strong>
+        </div>
+        <div class="family-line" style="font-size:18px; color:#8b6239;">
+          (والد العروس)
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="invite-text">
+          يشرفان بدعوتكم لحضور حفل زفاف وليديهما
+        </div>
+
+        <div class="dua-line">
+          ꧁︎ بَارَكَ ٱللَّهُ لَهُمَا وَبَارَكَ عَلَيْهُمَا وَجَمَعَ بَيْنَهُمَا فِي خَيْرٍ ꧂
+        </div>
+
+        <div class="divider" style="width:40%;"></div>
+
+        <!-- أسماء العروسين -->
+        <div class="title-main" style="font-size:38px; margin:6px 0;">
+          شهم &amp; وسامه 
+        </div>
+        <div style="text-align:center; font-size:16px; color:#7a532a; font-family:'Cairo',sans-serif; letter-spacing:2px;">
+          الأحد • 18 أكتوبر • 2026
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- عداد -->
+        <div class="count-title">✨ باقي القليل على أجمل ليلة</div>
+        <div class="count">
+          <div class="unit"><div class="num" id="days">--</div><div class="lab">يوم</div></div>
+          <div class="unit"><div class="num" id="hours">--</div><div class="lab">ساعة</div></div>
+          <div class="unit"><div class="num" id="mins">--</div><div class="lab">دقيقة</div></div>
+          <div class="unit"><div class="num" id="secs">--</div><div class="lab">ثانية</div></div>
+        </div>
+
+        <!-- معلومات الحفل -->
+        <section class="info">
+          <div class="info-card">
+            <div class="icon">◷</div>
+            <div><b>موعد الاحتفال</b><span>الأحد 18 أكتوبر 2026 — الساعة 18:00</span></div>
+          </div>
+          <div class="info-card">
+            <div class="icon">⌖</div>
+            <div><b>مكان الحفل</b><span>Star Palace AS</span>
+              <br><a class="map" href="https://maps.app.goo.gl/KU1DCkFkVL9hpGXW8?g_st=ic" target="_blank">فتح الموقع على الخريطة</a>
+            </div>
+          </div>
+        </section>
+		<!-- ممنوع التصوير -->
+
+
+    <footer>
+        مع محبتنا وتقديرنا لحضوركم ومشاركتكم فرحتنا 🤍
+		
+		
+		<div class="footer">
+          حضوركم هو أجمل ما تكتمل به فرحتنا،<br>
+          وننتظركم بكل شوق ومحبة 🤍
+        </div>
+		
+    </footer>
+
+
+
+        <!-- نموذج تأكيد الحضور -->
+        <div class="rsvp-section">
+
+          <div class="rsvp-title">📝 تأكيد الحضور</div>
+          <form action="https://formspree.io/f/xgawpdok" method="POST" target="_top">
+            <input type="text" name="name" placeholder="الاسم الكامل" required>
+            <input type="number" name="guests" placeholder="عدد الضيوف" max="5" required>
+			<input type="text" name="name" placeholder="ملاحظة أو رسالة للعروسين" required>
+		
+			
+                       
+					   <button type="submit">إرسال التأكيد</button>
+					   
+          </form>
+        </div>
+<section class="no-photo">
+
+        <div class="reveal">
+
+            <div class="no-photo-icon">
+			
+                          📵
+            </div>
+
+            <h1>نرجو منكم لطفًا</h1>
+
+            <h3>
+			
+			
+                حفاظًا على خصوصية هذه الليلة الجميلة،
+              .نرجو عدم التصوير أو نشر الصور ومقاطع الفيديو.
+              
+				
+            </h3>
+
+        </div>
+
+    </section>
+       
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+
+
+function openInvitation(){
+  document.getElementById('scene').classList.add('open');
+}
+
+// عداد التنازلي
+const target = new Date('2026-10-18T18:00:00+02:00').getTime();
+function countdown(){
+  let d = target - Date.now();
+  if(d < 0) d = 0;
+  const day = 86400000, hour = 3600000, min = 60000;
+  document.getElementById('days').textContent = Math.floor(d/day);
+  document.getElementById('hours').textContent = Math.floor((d%day)/hour);
+  document.getElementById('mins').textContent = Math.floor((d%hour)/min);
+  document.getElementById('secs').textContent = Math.floor((d%min)/1000);
+}
+countdown();
+setInterval(countdown, 1000);
+
+// التحكم بصوت الأغنية
+const audio = document.getElementById('wedding-audio');
+function toggleAudio() {
+  if (audio.paused) {
+    audio.play();
+    document.querySelector('.play-btn').textContent = '⏸ إيقاف';
+  } else {
+    audio.pause();
+    document.querySelector('.play-btn').textContent = '▶ تشغيل';
+  }
+}
+
+// جزيئات متلألئة
+for(let i = 0; i < 34; i++){
+  const s = document.createElement('i');
+  s.className = 'spark';
+  s.style.left = (Math.random() * 100) + '%';
+  s.style.bottom = (-5 + Math.random() * 15) + '%';
+  s.style.animationDelay = (-Math.random() * 7) + 's';
+  s.style.animationDuration = (5 + Math.random() * 7) + 's';
+  document.getElementById('stage').appendChild(s);
+}
+</script>
+</body>
+</html>
